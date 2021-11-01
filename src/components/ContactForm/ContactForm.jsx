@@ -8,11 +8,13 @@ import {
 } from '../../redux/contacts/contacts-slice';
 import { ImUsers, ImProfile, ImPhone } from 'react-icons/im';
 import { ContactForm, Label, Input, Button } from './ContactForm.styled';
+
 const initialState = { name: '', number: '' };
 
 export const Form = () => {
   const [contactCred, setContactCred] = useState(initialState);
   const { data: contacts } = useFetchContactsQuery();
+
   const [addContact, { isLoading }] = useAddContactMutation();
 
   const onSubmit = ({ name, number }) => {

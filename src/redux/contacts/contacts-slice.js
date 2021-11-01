@@ -5,7 +5,7 @@ const ContactsFilterSlice = createSlice({
   name: 'filter',
   initialState: { filter: '' },
   reducers: {
-    changeFilter(state, payload) {
+    changeFilter(state, { payload }) {
       state.filter = payload;
     },
   },
@@ -16,8 +16,20 @@ export const contactsFilterReducer = ContactsFilterSlice.reducer;
 
 export const contactsApi = createApi({
   reducerPath: 'contactApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://6176c95703178d00173dae80.mockapi.io/api/v1/' }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: 'https://connections-api.herokuapp.com',
+    prepareHeaders: (headers, { getState} ) => {
+    
+   const token = getState().auth.token;
+      if (token) {
+      headers.set('authorization', `Bearer ${token}`)
+    }
+
+    return headers;
+  }
+  }),
   tagTypes: ['Contacts'],
+    
   endpoints: (builder) => ({
     fetchContacts: builder.query({
       query: () => `/contacts`,

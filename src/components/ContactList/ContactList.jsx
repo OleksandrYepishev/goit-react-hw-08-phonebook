@@ -13,6 +13,7 @@ import { List } from './ContactList.styled';
 export const ContactList = () => {
   const { data: contacts } = useFetchContactsQuery();
   const filter = useSelector(getFilter);
+
   const debouncedFilter = useDebounce(filter, 500);
 
   const filteredContacts = useMemo(() => {
